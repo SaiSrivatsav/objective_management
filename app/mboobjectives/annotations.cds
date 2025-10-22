@@ -1,0 +1,1 @@
+using mboobjectives.srv.MboObjectives as service from '../../srv/mboobjectives-service';

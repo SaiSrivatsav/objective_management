@@ -1,0 +1,123 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:uxap="sap.uxap" controllerName="mboobjectives.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <uxap:ObjectPageLayout id="idObjectPage" showFooter="true">
+        <uxap:headerTitle >
+            <uxap:ObjectPageHeader 
+                    objectTitle="MBO Scoring" 
+                    objectSubtitle="Update Employee's MBO Scores"
+                    objectImageShape="Circle"
+                    isObjectIconAlwaysVisible="true"
+                    isObjectSubtitleAlwaysVisible="true"
+                    isActionAreaAlwaysVisible="true"
+                    isObjectTitleAlwaysVisible="true"
+                    objectImageBackgroundColor="Accent6"
+                    objectImageURI="sap-icon://end-user-experience-monitoring">
+                    <uxap:actions>
+                        <!-- <uxap:ObjectPageHeaderActionButton text="Edit" type="Neutral"></uxap:ObjectPageHeaderActionButton>
+                        <uxap:ObjectPageHeaderActionButton text="Permission Groups" type="Neutral"></uxap:ObjectPageHeaderActionButton>
+                        <uxap:ObjectPageHeaderActionButton text="Form designer" type="Neutral"></uxap:ObjectPageHeaderActionButton> -->
+                    </uxap:actions>
+            </uxap:ObjectPageHeader>
+        </uxap:headerTitle>
+        <uxap:sections>
+            <uxap:ObjectPageSection title="Employee Information" titleUppercase="false">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection >
+                        <VBox >
+                            <form:SimpleForm id="idEmployeeForm" editable="true" layout="ColumnLayout">
+                                <form:content>
+                                    <Label id="idLab-TerritoryId" text="Territory Id"></Label>
+                                    <ComboBox id="idTerritoryId" items="{ path: 'Participants>/' }" selectionChange="onTerritoryChange" showSecondaryValues="true">
+                                        <core:ListItem key="{Participants>userId}" text="{Participants>userId}" additionalText="{Participants>firstName} {Participants>lastName}" />
+                                    </ComboBox>
+
+                                    <Label id="idLab-Position" text="Position"></Label>
+                                    <Text id="idPosition"></Text>
+
+                                    <Label id="idLab-ParticipantName" text="Participant Name"></Label>
+                                    <Text id="idParticipantName" ></Text>
+
+                                    <Label id="idLab-TargetComp" text="Target Compensation"></Label>
+                                    <Text id="idTargetComp"></Text>
+                                </form:content>
+                            </form:SimpleForm>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection title="MBO Details" titleUppercase="false">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection >
+                        <VBox >
+                            <Table id="idMBODetailTab" mode="Delete" delete="onDeleteObjective" inset="false" width="auto" items="{MboDetails>/}">
+                                <headerToolbar>
+                                    <OverflowToolbar >
+                                        <Title text="Objectives"></Title>
+                                        <ToolbarSpacer />
+                                        <Button id="idAddBtn" icon="sap-icon://add" press="onAddObjective"></Button>
+                                        <!-- <Button id="idDelete" icon="sap-icon://delete" press="onDeleteObjective"></Button> -->
+                                        <Button id="idSave" text="Save" icon="sap-icon://save" type="Ghost" press="onSaveObjectives"></Button>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column >
+                                        <Label text="MBO Objective"></Label>
+                                    </Column>
+                                    <Column >
+                                        <Label text="MBO Weightage"></Label>
+                                    </Column>
+                                    <Column >
+                                        <Label text="Comments"></Label>
+                                    </Column>
+                                    <Column >
+                                        <Label text="MBO Score"></Label>
+                                    </Column>
+                                </columns>
+                                
+                                <noData>
+                                    <IllustratedMessage 
+                                            title="No data"
+                                            visible="true" 
+                                            description="Enter a valid territory id to see MBO Details" 
+                                            illustrationType="sapIllus-NoActivities">
+                                    </IllustratedMessage>
+                                </noData>
+
+                                <ColumnListItem>
+                                    <Input value="{MboDetails>objective}" change="onObjectiveChange"></Input>
+                                    <Input value="{MboDetails>mboWeightage}" change="onWeightageChange"></Input>
+                                    <Input value="{MboDetails>comments}" change="onCommentsChange"></Input>
+                                    <Input value="{MboDetails>mboScore}" change="onScoreChange"></Input>
+                                </ColumnListItem>
+                            </Table>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection title="Notifications" titleUppercase="false">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection >
+                        <VBox >
+                            <IllustratedMessage 
+                                    illustrationType="sapIllus-NoActivities"
+                                    title="No data"
+                                    visible="true"
+                                    description="Enter a valid territory id to see the notifications summary">
+                            </IllustratedMessage>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+        <uxap:footer>
+            <OverflowToolbar >
+                <ToolbarSpacer ></ToolbarSpacer>
+                <Button id="idSubmit" text="Submit" type="Emphasized"></Button>
+                <Button id="idCancel" text="Cancel" type="Ghost"></Button>
+            </OverflowToolbar>
+        </uxap:footer>
+    </uxap:ObjectPageLayout>
+</mvc:View>
