@@ -115,8 +115,8 @@
         <uxap:footer>
             <OverflowToolbar >
                 <ToolbarSpacer ></ToolbarSpacer>
-                <Button id="idSubmit" text="Submit" type="Emphasized"></Button>
-                <Button id="idCancel" text="Cancel" type="Ghost"></Button>
+                <Button id="idSubmit" text="Submit" enabled="true" type="Emphasized" press="onSubmitCase"></Button>
+                <Button id="idCancel" text="Cancel" type="Ghost" press="onCancelCase"></Button>
             </OverflowToolbar>
         </uxap:footer>
     </uxap:ObjectPageLayout>

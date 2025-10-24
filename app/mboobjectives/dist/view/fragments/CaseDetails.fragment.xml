@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<core:FragmentDefinition xmlns:f="sap.f" 
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core" 
+    xmlns:filterbar="sap.ui.comp.filterbar" 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Dialog id="refin-idCreateDialog" icon="" title="Case details" >
+        <content>
+            <form:SimpleForm id="idCaseDetailsForm" 
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        title=""
+                        labelSpanXL="3"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="4"
+                        emptySpanL="4"
+                        emptySpanM="4"
+                        emptySpanS="0"
+                        columnsXL="1"
+                        columnsL="1"
+                        columnsM="1">
+                <form:content>
+                    <Label text="Case Name"></Label>
+                    <Input id="idCaseName" required="true" value=""></Input>
+                    
+                    <Label text="Description"></Label>
+                    <TextArea id="idCaseDescription" value=""></TextArea>
+
+                    <Label text="Priority"></Label>
+                    <ComboBox id="idPriority" selectedKey="NonCritical">
+                        <core:ListItem key="Critical" text="Critical"/>
+                        <core:ListItem key="NonCritical" text="Non-Critical"/>
+                        <core:ListItem key="Trivial" text="Trivial"/>
+                    </ComboBox>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <footer>
+            <OverflowToolbar >
+                <ToolbarSpacer />
+                <Button id="idCreateCase" text="Create case" type="Emphasized" press="onCreateCase"></Button>
+                <Button id="idCancelForm" press="onCancelDialog" text="Cancel" type="Default"></Button>
+            </OverflowToolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

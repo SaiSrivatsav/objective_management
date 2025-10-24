@@ -69,9 +69,23 @@ modules:
       - mboobjectives.zip
       name: mboobjectives
       target-path: resources/
+    - artifacts:
+      - mboapproval.zip
+      name: mboapproval
+      target-path: resources/
 - name: mboobjectives
   type: html5
   path: app/mboobjectives
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: mboapproval
+  type: html5
+  path: app/mboapproval
   build-parameters:
     build-result: dist
     builder: custom

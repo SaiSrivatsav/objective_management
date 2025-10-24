@@ -112,7 +112,8 @@ sap.ui.define([
                     objective: item.objective,
                     mboWeightage: item.mboWeightage,
                     comments: item.comments,
-                    mboScore: item.mboScore
+                    mboScore: item.mboScore,
+                    rootId: item.rootId || null
                 });
             }
             const sUrl = this.getOwnerComponent().getManifestObject().resolveUri(this.getOwnerComponent().getManifestEntry("sap.app").dataSources.mainService.uri);
@@ -195,6 +196,73 @@ sap.ui.define([
                 oModel.refresh(true);
                 BusyIndicator.hide();
             }
+        },
+
+        onSubmitCase(oEvent){
+            if (!this.oCreateCase) {
+                this.oCreateCase = this.loadFragment({
+                    name: "mboobjectives.view.fragments.CaseDetails",
+                    controller: this
+                });
+            }
+            this.oCreateCase.then(function (oCreateCase) {
+                this.getView().addDependent(oCreateCase);
+                // this.getView().byId("idSortTitle").setText(this.mainIflow.description);
+                oCreateCase.open();
+            }.bind(this));
+            return;
+        },
+
+        onCancelDialog(oEvent){
+            oEvent.getSource().getParent().getParent().destroy();
+            delete this.oCreateCase;
+        },
+
+        onCreateCase(oEvent){
+            const oModel = this.getView().getModel("MboDetails");
+            const aData = oModel.getData();
+            const caseData = [];
+            for (let i = 0; i < aData.length; i++) {
+                const item = aData[i];
+                caseData.push({
+                    territoryId: this.getView().byId("idTerritoryId").getSelectedKey(),
+                    position: this.getView().byId("idPosition").getText(),
+                    participantName: this.getView().byId("idParticipantName").getText(),
+                    objectiveId: item.objectiveId || null,
+                    objective: item.objective,
+                    mboWeightage: item.mboWeightage,
+                    comments: item.comments,
+                    mboScore: item.mboScore,
+                    rootId: item.rootId || null,
+                    caseName: this.getView().byId("idCaseName").getValue(),
+                    priority: this.getView().byId("idPriority").getSelectedKey(),
+                    description: this.getView().byId("idCaseDescription").getValue()
+                });
+            }
+            const sUrl = this.getOwnerComponent().getManifestObject().resolveUri(this.getOwnerComponent().getManifestEntry("sap.app").dataSources.mainService.uri);
+            BusyIndicator.show();
+            fetch(`${sUrl}/createCase`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ caseDetails: caseData })
+            })
+            .then(response => {
+                BusyIndicator.hide();
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                MessageToast.show("Case created successfully");
+            })
+            .catch(error => {
+                BusyIndicator.hide();
+                MessageBox.error("Error creating case:", error);
+                console.error("Error creating case:", error);
+            });
         }
     });
 });

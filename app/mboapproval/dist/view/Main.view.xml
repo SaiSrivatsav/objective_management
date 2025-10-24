@@ -1,0 +1,215 @@
+<mvc:View xmlns:form="sap.ui.layout.form" controllerName="mboapproval.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:uxap="sap.uxap"
+    xmlns="sap.m">
+    <uxap:ObjectPageLayout id="refin-idErrorResolve"
+            enableLazyLoading="false"
+            showTitleInHeaderContent="true"
+            showEditHeaderButton="true"
+            showHeaderContent="true"
+            headerContentPinnable="false"
+            headerContentPinned="true"
+            showFooter="false">
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle  >
+                <uxap:expandedHeading>
+                    <Title id="idApprovalTitle" text="MBO Approvals" wrapping="true"></Title>
+                </uxap:expandedHeading>
+
+                <uxap:expandedContent>
+                    <Label text="MBO Approvals"></Label>
+                </uxap:expandedContent>
+
+                <uxap:snappedHeading>
+                    <HBox >
+                        <VBox >
+                            <Title text="MBO Approvals" wrapping="true"></Title>
+                        </VBox>
+                    </HBox>
+                </uxap:snappedHeading>
+
+                <uxap:actions>
+                    
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+
+        <!-- <uxap:headerContent>
+            <HeaderContainer scrollStep="200" showDividers="true"> -->
+                <!-- <HBox > -->
+                    <!-- <Avatar class="sapUiMediumMarginEnd sapUiSmallMarginBottom" 
+                            displayShape="Circle"
+                            displaySize="S" 
+                            src="sap-icon://clinical-task-tracker">
+                    </Avatar> -->
+
+                    <!-- <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+				        <Title text="Open Cases" class="sapUiTinyMarginBottom" />
+                        <ObjectStatus id="refin-idOpenTaskHdr" text="" state="Error" icon="sap-icon://activity-assigned-to-goal" 
+                                        class="sapMObjectStatusLarge"/>
+				    </VBox>
+
+                    <VBox class="sapUiMediumMarginEnd sapUiSmallMarginBottom">
+				        <Title text="Completed Tasks" class="sapUiTinyMarginBottom" />
+                        <ObjectStatus id="refin-idClosedTaskHdr" text="" state="Success" icon="sap-icon://activity-2" 
+                                        class="sapMObjectStatusLarge"/>
+				    </VBox> -->
+                
+                <!-- </HBox> -->
+            <!-- </HeaderContainer>
+        </uxap:headerContent> -->
+
+        <uxap:sections>
+            <uxap:ObjectPageSection showTitle="false">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection showTitle="false" class="sapUiNoContentPadding sapUiNoMargin">
+                        <SplitApp id="idSplitApp" class="sapUiNoContentPadding sapUiNoMargin" initialMaster="master" initialDetail="detail">
+                            <masterPages>
+                                <Page id="master" backgroundDesign="List" title="All Cases">
+                                    <OverflowToolbar >
+                                        <SearchField id="idMasterSearch" width="60%"></SearchField>
+                                        <ToolbarSpacer ></ToolbarSpacer>
+                                        <Button id="refin-idMainRefresh" press="onMasterRefresh" text="" type="Neutral" icon="sap-icon://synchronize"></Button>
+                                    </OverflowToolbar>
+                                    <List id="idMasterList" class="sapUiSmallMarginTop" items="{CaseList>/}">
+                                        <ObjectListItem title="{CaseList>caseName}" 
+                                                        type="Active" 
+                                                        press="onItemPress">
+                                            <firstStatus>
+                                                <ObjectStatus text="{CaseList>priority}" state="Warning"></ObjectStatus>
+                                            </firstStatus>
+                                            <ObjectAttribute text="{CaseList>submittedDate}"></ObjectAttribute>
+                                            <ObjectAttribute text="{CaseList>submittedBy}"></ObjectAttribute>
+                                        </ObjectListItem>
+                                    </List>
+                                </Page>
+                            </masterPages>
+
+                            <detailPages>
+                                <uxap:ObjectPageLayout id="idDetailObjPage" visible="true" showFooter="false">
+                                    <uxap:headerTitle>
+                                        <uxap:ObjectPageDynamicHeaderTitle>
+                                            <uxap:heading>
+                                                <Title id="idCaseTitle" text=""/>
+                                            </uxap:heading>
+
+                                            <uxap:snappedTitleOnMobile>
+                                                <Title id="idCaseTitleSnap" text="" />
+                                            </uxap:snappedTitleOnMobile>
+
+                                            <uxap:actions>
+                                                <Button visible="true" id="idApproveBtn" text="Approve" type="Accept" press="onApproveCase"></Button>
+                                                <Button visible="true" id="idRejectBtn" text="Reject" type="Reject" press="onRejectCase"></Button>
+                                                <Button visible="true" id="idForwardBtn" icon="sap-icon://forward" text="Forward" type="Ghost"></Button>
+                                            </uxap:actions>
+                                        </uxap:ObjectPageDynamicHeaderTitle>
+                                    </uxap:headerTitle>
+
+                                    <uxap:sections>
+                                        <uxap:ObjectPageSection visible="true" id="idCaseInfo">
+                                            <uxap:subSections>
+                                                <uxap:ObjectPageSubSection id="idCaseDetails" title="Case Information" showTitle="true" titleUppercase="false" titleLevel="Auto">
+                                                    <form:SimpleForm id="idEmployeeForm" editable="false" layout="ColumnLayout">
+                                                        <form:content>
+                                                            <Label id="idCaseName" text="Case name"></Label>
+                                                            <Text id="idCaseNameText"></Text>
+
+                                                            <Label id="idCaseDescp" text="Case Description"></Label>
+                                                            <Text id="idCaseDescpText"></Text>
+
+                                                            <Label id="idCreatedBy" text="Created By"></Label>
+                                                            <Text id="idCreatedByText"></Text>
+
+                                                            <Label id="idAssignedTo" text="Assigned To"></Label>
+                                                            <Text id="idAssignedToText"></Text>
+
+                                                            <Label id="idPriority" text="Priority"></Label>
+                                                            <Text id="idPriorityText"></Text>
+
+                                                            <Label id="idStatus" text="Status"></Label>
+                                                            <Text id="idStatusText"></Text>
+                                                        </form:content>
+                                                    </form:SimpleForm>
+                                                </uxap:ObjectPageSubSection>
+                                            </uxap:subSections>
+                                        </uxap:ObjectPageSection>
+
+                                        <uxap:ObjectPageSection visible="true" id="idSectionObjectives" title="Objectives" showTitle="true" titleUppercase="false" titleLevel="Auto">
+                                            <uxap:subSections>
+                                                <uxap:ObjectPageSubSection id="idSubSectionObjectives">
+                                                    <VBox class="sapUiSmallMargin">
+                                                        <Table id="idMBODetailTab" mode="None" delete="onDeleteObjective" inset="false" width="auto" items="{MboDetails>/}">
+                                                            <headerToolbar>
+                                                                <OverflowToolbar >
+                                                                    <Title text="Objectives"></Title>
+                                                                    <ToolbarSpacer />
+                                                                    <Button id="idExportBtn" icon="sap-icon://export" press="onExportObjectives"></Button>
+                                                                </OverflowToolbar>
+                                                            </headerToolbar>
+                                                            <columns>
+                                                                <Column >
+                                                                    <Label text="MBO Objective"></Label>
+                                                                </Column>
+                                                                <Column >
+                                                                    <Label text="MBO Weightage"></Label>
+                                                                </Column>
+                                                                <Column >
+                                                                    <Label text="Comments"></Label>
+                                                                </Column>
+                                                                <Column >
+                                                                    <Label text="MBO Score"></Label>
+                                                                </Column>
+                                                            </columns>
+
+                                                            <ColumnListItem>
+                                                                <Text text="{MboDetails>objective}" ></Text>
+                                                                <Text text="{MboDetails>mboWeightage}" ></Text>
+                                                                <Text text="{MboDetails>comments}" ></Text>
+                                                                <Text text="{MboDetails>mboScore}" ></Text>
+                                                            </ColumnListItem>
+                                                        </Table>
+                                                    </VBox>
+                                                </uxap:ObjectPageSubSection>
+                                            </uxap:subSections>
+                                        </uxap:ObjectPageSection>
+
+                                        <uxap:ObjectPageSection visible="true" id="idSectionFiles" title="Documents" showTitle="true" titleUppercase="false" titleLevel="Auto">
+                                            <uxap:subSections>
+                                                <uxap:ObjectPageSubSection >
+                                                    <IllustratedMessage title="No Files Available" 
+                                                                        description="There are no files attached to this case." 
+                                                                        illustrationType="sapIllus-NoEntries">
+                                                    
+                                                    </IllustratedMessage>
+                                                </uxap:ObjectPageSubSection>
+                                            </uxap:subSections>
+                                        </uxap:ObjectPageSection>
+
+                                        <uxap:ObjectPageSection visible="true" id="idSectionComments" title="Comments" showTitle="true" titleUppercase="false" titleLevel="Auto">
+                                            <uxap:subSections>
+                                                <uxap:ObjectPageSubSection >
+                                                    <VBox >
+                                                        <FeedInput id="idCommentInput" icon="" placeholder="Add a comment..." post="onCommentSubmit"></FeedInput>
+                                                        <!-- <List id="idCommentList" items="CaseComments>/">
+                                                            <FeedListItem 
+                                                                sender="{CaseComments>sender}" 
+                                                                timestamp="{CaseComments>timestamp}" 
+                                                                text="{CaseComments>comment}">
+                                                            </FeedListItem>
+                                                        </List> -->
+                                                        
+                                                    </VBox>
+                                                </uxap:ObjectPageSubSection>
+                                            </uxap:subSections>
+                                        </uxap:ObjectPageSection>     
+                                    </uxap:sections>
+                                </uxap:ObjectPageLayout>
+                            </detailPages>
+                        </SplitApp>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+    
+   </uxap:ObjectPageLayout>
+</mvc:View>
